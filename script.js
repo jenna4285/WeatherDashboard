@@ -144,10 +144,10 @@ var showWeatherPredicition = function (prediction, where) {
         console.log(date);
         var displayDate = document.createElement("div");
         displayDate.textContent = date;
-        displayDate.classList.add(".cdate");
+        displayDate.classList.add("cdate");
+        displayDate.classList.add("mb-3")
         cards.appendChild(displayDate);
-        cards.classList.add(".card")
-        cards.classList.add(".card-body");
+        displayDate.classList.add("card");
                 
         // display balance of info to cards
         // insert icon**Need help
@@ -156,16 +156,16 @@ var showWeatherPredicition = function (prediction, where) {
         var displayWindForecast = document.createElement("p");
         var displayHumidityForecast = document.createElement("p");
 
-        displayIcon.Src = week[i].weather[0].icon +"/100px180/";
+        displayIcon.src = "http://openweathermap.org/img/wn/" + week[i].weather[0].icon + "@2x.png";
         displayTempForecast.textContent = "Temp: " + week[i].temp.day + " F";
         displayWindForecast.textContent = "Wind: " + week[i].wind_speed + " mph";
         displayHumidityForecast.textContent = "Humidity: " + week[i].humidity + " %";
         
-        displayIcon.classList.add(".climg");
+        displayIcon.classList.add("climg");
         // displayIcon.classList.add("/100px180/")
-        displayTempForecast.classList.add(".ctemp");
-        displayWindForecast.classList.add(".cwind");
-        displayHumidityForecast.classList.add(".chumidity")
+        displayTempForecast.classList.add("ctemp");
+        displayWindForecast.classList.add("cwind");
+        displayHumidityForecast.classList.add("chumidity")
         
         
         displayDate.append(displayIcon);

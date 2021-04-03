@@ -2,4 +2,7 @@ header {
     text-align: center;
 }
 
+.date {
+    border: 10px solid black;
+}
 
