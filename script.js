@@ -2,8 +2,9 @@ var cityInputEl = document.querySelector(".cityForm");
 var cityContainerEl = document.querySelector(".cityNameOutput");
 var todayContainerEl = document.querySelector(".todayOutput");
 var searchBtn = document.getElementById("button-addon2");
-var previousSearch = document.querySelector(".currentCity");
+var previousSearch = document.querySelector(".cityHistory");
 var today = moment().format("L");
+var citySearches = [];
 
 // event handler function for submitting city name in search
 var formSubmitHandler = function (event) {
@@ -19,15 +20,32 @@ var formSubmitHandler = function (event) {
     } else {
         alert('Please enter a City');
     }
-    
-    localStorage.setItem("searchCity", citySearch);
-    localStorage.getItem("searchCity", citySearch);
-
-    previousSearch.textContent = citySearch;
+    // push city searched into array for storage
+    citySearches.push(citySearch);
+    storeCities(citySearches);
+    renderCities();
 };
 
-// function for fetching data w/ search input
+// local storage of city names searched
+function storeCities () {
+    localStorage.setItem("searchCity", JSON.stringify(citySearches));
+};
 
+// local storage retrieval of city names searched & rendering to page
+function renderCities () {
+    var renderSearches = JSON.parse(localStorage.getItem("searchCity"));
+    // cityHistory.textContent = renderSearches;
+    for (var i=0; i< renderSearches.length; i++) {
+        var city = renderSearches[i];
+
+        var li = document.createElement("li");
+        li.textContent = citySearches[i];
+        li.classList.add("list-group-item");
+        previousSearch.appendChild(li)[i];
+    }
+}   
+    
+// function for fetching data w/ search input 
 var getWeatherForecast = function (location) {
     var apiUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' +location + '&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial';
 
@@ -72,7 +90,13 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
     displayHumidity.textContent = "Humidity: " + humidity + " %";
     // displayUV.textContent = "UV Index:" + displayUV;
 
-    }
+}
+
+// function for fetching 5 day forecast
+
+
+// function to display 5 day forecast
+
 
 
 
