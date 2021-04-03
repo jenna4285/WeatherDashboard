@@ -4,6 +4,7 @@ var todayContainerEl = document.querySelector(".todayOutput");
 var searchBtn = document.getElementById("button-addon2");
 var previousSearch = document.querySelector(".cityHistory");
 var today = moment().format("L");
+var cards = document.querySelector(".card-deck")
 var citySearches = [];
 
 // event handler function for submitting city name in search
@@ -129,32 +130,45 @@ var convertLatlon = function (returnedInfo, cityNameSearched) {
 var showWeatherPredicition = function (prediction, where) {
 //    display UV in current card
     var uvindex = prediction.current.uvi;
-    console.log(uvindex);
     var displayUV = document.querySelector(".uvindex"); 
     displayUV.textContent = "UV Index: " + uvindex;
 
-    console.log(prediction);
-    console.log(prediction.daily[0].dt);
-    console.log(JSON.parse(prediction.length));
-// display 5 day forecast cards
-// convert unix date to short form date 
-    for (var i=0; i < prediction.length; i++) {
-        var unix = prediction.daily[i].dt;
-        var date = moment.unix(unix[i]).format("L");
-        
-        console.log (date);
-    }
-    // var renderPredition = 
+    // create array for forecast info
+    var week = [prediction.daily[1], prediction.daily[2], prediction.daily[3], prediction.daily[4],prediction.daily[5]];    
     
-    // insert icon
-    // show temp
-    // show wind
-    // show humidity
+// display 5 day forecast cards
+    // convert unix date to short form date & display in cards
+    for (var i=0; i < week.length; i++) {
+        var unix = week[i].dt;
+        var date = moment.unix(unix).format("L");
+        console.log(date);
+        var displayDate = document.createElement("h5");
+        displayDate.textContent = "Date: " + date;
+        displayDate.classList.add(".cdate");
+        cards.appendChild(displayDate);
+        cards.classList.add(".card");
+        
+        // display balance of info to cards
+        // insert icon**
+        var displayTempForecast = document.createElement("p");
+        var displayWindForecast = document.createElement("p");
+        var displayHumidityForecast = document.createElement("p");
 
-
-};
-
-
+        displayTempForecast.textContent = "Temp: " + week[i].temp.day + " F";
+        displayWindForecast.textContent = "Wind: " + week[i].wind_speed + " mph";
+        displayHumidityForecast.textContent = "Humidity: " + week[i].humidity + " %";
+        
+        displayTempForecast.classList.add(".ctemp");
+        displayWindForecast.classList.add(".cwind");
+        displayHumidityForecast.classList.add(".chumidity")
+        
+        displayDate.append(displayTempForecast);
+        displayTempForecast.append(displayWindForecast);
+        displayWindForecast.append(displayHumidityForecast);
+          
+    }};
+     
+  
 // click listener for button
 searchBtn.addEventListener('click', formSubmitHandler);
 // searchBtn.addEventListener('click', showWeatherPredicition)
