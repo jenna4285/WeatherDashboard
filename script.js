@@ -24,6 +24,7 @@ var formSubmitHandler = function (event) {
     citySearches.push(citySearch);
     storeCities(citySearches);
     renderCities();
+    // getWeatherPredicition();
 };
 
 // local storage of city names searched
@@ -55,6 +56,7 @@ var getWeatherForecast = function (location) {
                 console.log(response);
                 response.json().then (function (currentData) {
                     console.log(currentData);
+                    convertLatlon(currentData,location);
                     displayCurrentConditions(currentData, location);
                 });
             } else {
@@ -65,6 +67,25 @@ var getWeatherForecast = function (location) {
             alert('Unable to connect to OpenWeather');
         });
 };
+
+// retrieve lat long from city input
+
+var convertLatlon = function (returnedInfo, cityNameSearched) {
+       var latLon = {
+           x: returnedInfo.coord.lat,
+           y: returnedInfo.coord.lon,
+       }
+       console.log(latLon);
+    
+        // var x = returnedInfo.coord.lat;
+        // var y = returnedInfo.coord.lon;
+        // console.log(x);
+        // console.log(y);
+    
+        // console.log(latLong);
+            getWeatherPredicition(latLon);
+}
+
 
 // function to display current forecast
 var displayCurrentConditions = function (currentForecast, searchLocation) {
@@ -93,7 +114,31 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
 }
 
 // function for fetching 5 day forecast
+var getWeatherPredicition = function (latLon) {
+    // event.preventDefault();
+    // console.log(latLon);
+    var lat = latLon[0];
+    var lon = latLon[1];
 
+    var apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=`+lat + `&lon=` +lon `&exclude=current,minutely,hourly,alerts&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial`;
+
+    fetch(apiUrl2)
+        .then(function (response2) {
+            if (response.ok) {
+                console.log(response2);
+                response.json().then (function (futureData) {
+                    console.log(futureData);
+                    // displayFutureConditions(FutureData, location);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to OpenWeatherfor 5 Day Forecast');
+        });
+};
+    
 
 // function to display 5 day forecast
 
@@ -103,3 +148,4 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
 
 // click listener for button
 searchBtn.addEventListener('click', formSubmitHandler);
+searchBtn.addEventListener('click', getWeatherPredicition)
