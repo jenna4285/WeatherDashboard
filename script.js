@@ -142,28 +142,31 @@ var showWeatherPredicition = function (prediction, where) {
         var unix = week[i].dt;
         var date = moment.unix(unix).format("L");
         console.log(date);
-        var displayDate = document.createElement("h5");
-        displayDate.textContent = "Date: " + date;
+        var displayDate = document.createElement("div");
+        displayDate.textContent = date;
         displayDate.classList.add(".cdate");
         cards.appendChild(displayDate);
-        cards.classList.add(".card");
-        
+        cards.classList.add(".card")
+        cards.classList.add(".card-body");
+                
         // display balance of info to cards
-        // insert icon**
+        // insert icon**Need help
         var displayIcon = document.createElement("img");
         var displayTempForecast = document.createElement("p");
         var displayWindForecast = document.createElement("p");
         var displayHumidityForecast = document.createElement("p");
 
-        displayIcon.Src = week[i].weather[0].icon;
+        displayIcon.Src = week[i].weather[0].icon +"/100px180/";
         displayTempForecast.textContent = "Temp: " + week[i].temp.day + " F";
         displayWindForecast.textContent = "Wind: " + week[i].wind_speed + " mph";
         displayHumidityForecast.textContent = "Humidity: " + week[i].humidity + " %";
         
         displayIcon.classList.add(".climg");
+        // displayIcon.classList.add("/100px180/")
         displayTempForecast.classList.add(".ctemp");
         displayWindForecast.classList.add(".cwind");
         displayHumidityForecast.classList.add(".chumidity")
+        
         
         displayDate.append(displayIcon);
         displayDate.append(displayTempForecast);
