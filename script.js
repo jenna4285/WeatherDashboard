@@ -150,18 +150,22 @@ var showWeatherPredicition = function (prediction, where) {
         
         // display balance of info to cards
         // insert icon**
+        var displayIcon = document.createElement("img");
         var displayTempForecast = document.createElement("p");
         var displayWindForecast = document.createElement("p");
         var displayHumidityForecast = document.createElement("p");
 
+        displayIcon.Src = week[i].weather[0].icon;
         displayTempForecast.textContent = "Temp: " + week[i].temp.day + " F";
         displayWindForecast.textContent = "Wind: " + week[i].wind_speed + " mph";
         displayHumidityForecast.textContent = "Humidity: " + week[i].humidity + " %";
         
+        displayIcon.classList.add(".climg");
         displayTempForecast.classList.add(".ctemp");
         displayWindForecast.classList.add(".cwind");
         displayHumidityForecast.classList.add(".chumidity")
         
+        displayDate.append(displayIcon);
         displayDate.append(displayTempForecast);
         displayTempForecast.append(displayWindForecast);
         displayWindForecast.append(displayHumidityForecast);
