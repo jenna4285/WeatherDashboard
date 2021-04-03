@@ -94,7 +94,6 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
 }
 
 // retrieve lat long from city input & send fetch request using latLon
-
 var convertLatlon = function (returnedInfo, cityNameSearched) {
        var latLon = {
            x: returnedInfo.coord.lat,
@@ -106,7 +105,7 @@ var convertLatlon = function (returnedInfo, cityNameSearched) {
             latLon.x + 
             "&lon=" +
             latLon.y + 
-            "&exclude=current,minutely,hourly,alerts&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial";
+            "&exclude=minutely,hourly,alerts&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial";
         
             fetch(apiUrl2)
                 .then(function (response2) {
@@ -128,17 +127,32 @@ var convertLatlon = function (returnedInfo, cityNameSearched) {
 
 //  function to display current UV Index & 5 day forecast
 var showWeatherPredicition = function (prediction, where) {
-    var uvindex = prediction.daily[0].uvi;
+//    display UV in current card
+    var uvindex = prediction.current.uvi;
     console.log(uvindex);
     var displayUV = document.querySelector(".uvindex"); 
     displayUV.textContent = "UV Index: " + uvindex;
-};
+
+    console.log(prediction);
+    console.log(prediction.daily[0].dt);
+    console.log(JSON.parse(prediction.length));
+// display 5 day forecast cards
+// convert unix date to short form date 
+    for (var i=0; i < prediction.length; i++) {
+        var unix = prediction.daily[i].dt;
+        var date = moment.unix(unix[i]).format("L");
+        
+        console.log (date);
+    }
+    // var renderPredition = 
     
+    // insert icon
+    // show temp
+    // show wind
+    // show humidity
 
 
-
-
-
+};
 
 
 // click listener for button
