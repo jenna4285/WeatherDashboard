@@ -68,26 +68,7 @@ var getWeatherForecast = function (location) {
         });
 };
 
-// retrieve lat long from city input
-
-var convertLatlon = function (returnedInfo, cityNameSearched) {
-       var latLon = {
-           x: returnedInfo.coord.lat,
-           y: returnedInfo.coord.lon,
-       }
-       console.log(latLon);
-    
-        // var x = returnedInfo.coord.lat;
-        // var y = returnedInfo.coord.lon;
-        // console.log(x);
-        // console.log(y);
-    
-        // console.log(latLong);
-            getWeatherPredicition(latLon);
-}
-
-
-// function to display current forecast
+// function to display current forecast (less UV index)
 var displayCurrentConditions = function (currentForecast, searchLocation) {
     if (currentForecast.length === 0) {
         todayContainerEl.textContent = 'No Weather Forecast Available.';
@@ -99,48 +80,62 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
     var wind = currentForecast.wind.speed;
     console.log(wind);
     var humidity = currentForecast.main.humidity;
-    // var uvindex = currentForecast.CANNOT FIND IN CONSOLE OR SITE
-
+   
     var displayTemp = document.querySelector(".temp");
     var displayWind = document.querySelector(".wind");
     var displayHumidity = document.querySelector(".humidity");
-    // var displayUV = document.querySelector(".uvindex");
+    
 
     displayTemp.textContent = "Temperature: " + temp + " degrees F";
     displayWind.textContent = "Wind: " + wind + " mph";
     displayHumidity.textContent = "Humidity: " + humidity + " %";
-    // displayUV.textContent = "UV Index:" + displayUV;
+   
 
 }
 
-// function for fetching 5 day forecast
-var getWeatherPredicition = function (latLon) {
-    // event.preventDefault();
-    // console.log(latLon);
-    var lat = latLon[0];
-    var lon = latLon[1];
+// retrieve lat long from city input & send fetch request using latLon
 
-    var apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=`+lat + `&lon=` +lon `&exclude=current,minutely,hourly,alerts&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial`;
-
-    fetch(apiUrl2)
-        .then(function (response2) {
-            if (response.ok) {
-                console.log(response2);
-                response.json().then (function (futureData) {
-                    console.log(futureData);
-                    // displayFutureConditions(FutureData, location);
+var convertLatlon = function (returnedInfo, cityNameSearched) {
+       var latLon = {
+           x: returnedInfo.coord.lat,
+           y: returnedInfo.coord.lon,
+       }
+       console.log(latLon);
+    
+            var apiUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat="+ 
+            latLon.x + 
+            "&lon=" +
+            latLon.y + 
+            "&exclude=current,minutely,hourly,alerts&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial";
+        
+            fetch(apiUrl2)
+                .then(function (response2) {
+                    if (response2.ok) {
+                        console.log(response2);
+                        response2.json().then (function (futureData) {
+                            console.log(futureData);
+                            showWeatherPredicition(futureData, location);
+                        });
+                    } else {
+                        alert('Error: ' + response2.statusText);
+                    }
+                })
+                .catch(function (error) {
+                    alert('Unable to connect to OpenWeatherfor 5 Day Forecast');
                 });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        })
-        .catch(function (error) {
-            alert('Unable to connect to OpenWeatherfor 5 Day Forecast');
-        });
+
+}
+
+//  function to display current UV Index & 5 day forecast
+var showWeatherPredicition = function (prediction, where) {
+    var uvindex = prediction.daily[0].uvi;
+    console.log(uvindex);
+    var displayUV = document.querySelector(".uvindex"); 
+    displayUV.textContent = "UV Index: " + uvindex;
 };
     
 
-// function to display 5 day forecast
+
 
 
 
@@ -148,4 +143,4 @@ var getWeatherPredicition = function (latLon) {
 
 // click listener for button
 searchBtn.addEventListener('click', formSubmitHandler);
-searchBtn.addEventListener('click', getWeatherPredicition)
+// searchBtn.addEventListener('click', showWeatherPredicition)
