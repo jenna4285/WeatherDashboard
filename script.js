@@ -52,7 +52,7 @@ function renderCities () {
     
 // function for fetching data w/ search input 
 var getWeatherForecast = function (location) {
-    var apiUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' +location + '&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial';
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' +location + '&appid=ed583dd51a00da89e6929f4359d523e1&units=imperial';
 
     fetch(apiUrl)
         .then(function (response) {
@@ -168,7 +168,7 @@ var showWeatherPredicition = function (prediction, where) {
         var displayWindForecast = document.createElement("p");
         var displayHumidityForecast = document.createElement("p");
 
-        displayIcon.src = "http://openweathermap.org/img/wn/" + week[i].weather[0].icon + "@2x.png";
+        displayIcon.src = "https://openweathermap.org/img/wn/" + week[i].weather[0].icon + "@2x.png";
         displayTempForecast.textContent = "Temp: " + week[i].temp.day + " F";
         displayWindForecast.textContent = "Wind: " + week[i].wind_speed + " mph";
         displayHumidityForecast.textContent = "Humidity: " + week[i].humidity + " %";
