@@ -10,7 +10,7 @@ var citySearches = [];
 // event handler function for submitting city name in search
 var formSubmitHandler = function (event) {
     event.preventDefault();
-
+     
     var citySearch = cityInputEl.value.trim();
 
     if (citySearch) {
@@ -21,6 +21,8 @@ var formSubmitHandler = function (event) {
     } else {
         alert('Please enter a City');
     }
+
+
     // push city searched into array for storage
     citySearches.push(citySearch);
     storeCities(citySearches);
@@ -90,6 +92,9 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
     displayTemp.textContent = "Temperature: " + temp + " degrees F";
     displayWind.textContent = "Wind: " + wind + " mph";
     displayHumidity.textContent = "Humidity: " + humidity + " %";
+
+    cityContainerEl.classList.add("bg-primary");
+    todayContainerEl.classList.add("bg-primary");
    
 
 }
@@ -146,6 +151,7 @@ var showWeatherPredicition = function (prediction, where) {
         displayDate.textContent = date;
         displayDate.classList.add("cdate");
         displayDate.classList.add("mb-3")
+        displayDate.classList.add("bg-primary");
         cards.appendChild(displayDate);
         displayDate.classList.add("card");
                 
@@ -162,7 +168,6 @@ var showWeatherPredicition = function (prediction, where) {
         displayHumidityForecast.textContent = "Humidity: " + week[i].humidity + " %";
         
         displayIcon.classList.add("climg");
-        // displayIcon.classList.add("/100px180/")
         displayTempForecast.classList.add("ctemp");
         displayWindForecast.classList.add("cwind");
         displayHumidityForecast.classList.add("chumidity")
