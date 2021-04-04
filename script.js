@@ -46,7 +46,8 @@ function renderCities () {
         li.textContent = citySearches[i];
         li.classList.add("list-group-item");
         previousSearch.appendChild(li)[i];
-    }
+
+    } 
 }   
     
 // function for fetching data w/ search input 
@@ -143,6 +144,11 @@ var showWeatherPredicition = function (prediction, where) {
     
 // display 5 day forecast cards
     // convert unix date to short form date & display in cards
+    var elRemove = document.querySelector('.cdate');
+    if (elRemove) {
+        elRemove.remove();
+        }
+
     for (var i=0; i < week.length; i++) {
         var unix = week[i].dt;
         var date = moment.unix(unix).format("L");
