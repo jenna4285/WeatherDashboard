@@ -35,10 +35,20 @@ function storeCities () {
     localStorage.setItem("searchCity", JSON.stringify(citySearches));
 };
 
+function clearDisplay () {
+    if(previousSearch.firstChild ){
+       previousSearch.removeChild("li");
+    }
+    if (cards){
+        cards.childNodes(remove);
+    }
+}
+
 // local storage retrieval of city names searched & rendering to page
 function renderCities () {
     var renderSearches = JSON.parse(localStorage.getItem("searchCity"));
     // cityHistory.textContent = renderSearches;
+   
     for (var i=0; i< renderSearches.length; i++) {
         var city = renderSearches[i];
 
@@ -47,7 +57,7 @@ function renderCities () {
         li.classList.add("list-group-item");
         previousSearch.appendChild(li)[i];
 
-    } 
+    };
 }   
     
 // function for fetching data w/ search input 
@@ -98,7 +108,7 @@ var displayCurrentConditions = function (currentForecast, searchLocation) {
     todayContainerEl.classList.add("bg-primary");
    
 
-}
+};
 
 // retrieve lat long from city input & send fetch request using latLon
 var convertLatlon = function (returnedInfo, cityNameSearched) {
@@ -130,7 +140,7 @@ var convertLatlon = function (returnedInfo, cityNameSearched) {
                     alert('Unable to connect to OpenWeatherfor 5 Day Forecast');
                 });
 
-}
+};
 
 //  function to display current UV Index & 5 day forecast
 var showWeatherPredicition = function (prediction, where) {
@@ -143,11 +153,7 @@ var showWeatherPredicition = function (prediction, where) {
     var week = [prediction.daily[1], prediction.daily[2], prediction.daily[3], prediction.daily[4],prediction.daily[5]];    
     
 // display 5 day forecast cards
-    // convert unix date to short form date & display in cards
-    var elRemove = document.querySelector('.cdate');
-    if (elRemove) {
-        elRemove.remove();
-        }
+    // convert unix date to short form date & display in card 
 
     for (var i=0; i < week.length; i++) {
         var unix = week[i].dt;
@@ -184,9 +190,9 @@ var showWeatherPredicition = function (prediction, where) {
         displayTempForecast.append(displayWindForecast);
         displayWindForecast.append(displayHumidityForecast);
           
-    }};
+    };
+};
      
-  
+
 // click listener for button
 searchBtn.addEventListener('click', formSubmitHandler);
-// searchBtn.addEventListener('click', showWeatherPredicition)
