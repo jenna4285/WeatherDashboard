@@ -15,7 +15,8 @@ var formSubmitHandler = function (event) {
 
     if (citySearch) {
         getWeatherForecast(citySearch);
-
+        previousSearch.innerHTML='';
+        cards.innerHTML='';
         cityContainerEl.textContent = '';
         cityInputEl.value = '';
     } else {
@@ -34,15 +35,6 @@ var formSubmitHandler = function (event) {
 function storeCities () {
     localStorage.setItem("searchCity", JSON.stringify(citySearches));
 };
-
-function clearDisplay () {
-    if(previousSearch.firstChild ){
-       previousSearch.removeChild("li");
-    }
-    if (cards){
-        cards.childNodes(remove);
-    }
-}
 
 // local storage retrieval of city names searched & rendering to page
 function renderCities () {
